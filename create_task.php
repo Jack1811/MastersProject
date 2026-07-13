@@ -16,12 +16,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $stmt->execute([$userId]);
 
+    // Get date
     $today = $stmt->fetch();
     
+    // Get data from form
     $skillId = (int) $_POST['skill_id'];
     $title = trim($_POST['title']);
     $description = trim($_POST['description']);
     $difficulty = $_POST['difficulty'];
+    
+    // Set difficulty XP rewards
     switch ($difficulty)
     {
     case "Easy":
@@ -44,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $xpReward = 25;
     }   
 
+    // Daily quest limit
     if ($today['total'] >= 50)
     {
         die("You have already created the maximum of 50 quests today.");

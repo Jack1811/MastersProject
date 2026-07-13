@@ -87,6 +87,9 @@ $stmtLeaderboard = $pdo->query("
                         <?php echo htmlspecialchars($user['username']); ?>
                     </a>
                 </h1>
+                <br>
+                <p><?php echo htmlspecialchars($user['bio']);?></p>
+                <br>
             </div>
 
             <div class="overall-progress">
@@ -196,9 +199,7 @@ $stmtLeaderboard = $pdo->query("
                                 <p><strong>XP Reward:</strong> <?php echo htmlspecialchars($quest['xp_reward']); ?> XP</p>
                                 <p><strong>Description:</strong> <?php echo htmlspecialchars($quest['description']); ?></p>
                                 
-                                <a href="complete_task.php?quest_id=<?php echo urlencode($quest['quest_id']); ?>" class="btn-complete">
-                                    Mark as completed
-                                </a>
+                                <a href="complete_task.php?quest_id=<?php echo urlencode($quest['quest_id']); ?>" class="btn-complete">Mark as completed</a>
 
                                 <a href="delete_task.php?quest_id=<?php echo urlencode($quest['quest_id']); ?>" class="btn-delete" onclick="return confirm('Are you sure you want to delete this quest?');">Delete Quest</a>
                             </div>
