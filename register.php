@@ -14,21 +14,20 @@ $error = "";
 // Runs if post
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    // Check if username or email already exists
+    // Check if username  already exists
     $stmt = $pdo->prepare(
-        "SELECT * FROM users WHERE username = ? OR email = ?"
+        "SELECT * FROM users WHERE username = ?"
     );
 
     $stmt->execute([
         $_POST['username'],
-        $_POST['email']
     ]);
 
     $existingUser = $stmt->fetch();
 
     if($existingUser)
     {
-        $error = 'Username or email already exists. Please try again. Alternatively, <a href="login.php" class="btn">Login</a>';
+        $error = 'Username already exists. Please try again. Alternatively, <a href="login.php" class="btn">Login</a>';
     }
     else
     {
@@ -41,14 +40,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         // writes sql query
         $stmt = $pdo->prepare(
             "INSERT INTO users
-            (username,email,password_hash)
-            VALUES (?,?,?)"
+            (username,password_hash)
+            VALUES (?,?)"
         );
 
         // sends SQL query with inserted values
         $stmt->execute([
             $_POST['username'],
-            $_POST['email'],
             $passwordHash
         ]);
 
@@ -97,7 +95,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                 <h1>Register</h1>
 
                 <input name="username" placeholder="Username" required>
-                <input name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Password" required>
                 <button>Register</button>
 

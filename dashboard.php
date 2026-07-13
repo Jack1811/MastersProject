@@ -75,7 +75,6 @@ $stmtLeaderboard = $pdo->query("
         <aside class="sidebar">
 
             <nav class="nav-links">
-                <a href="groups.php">Party</a>
                 <a href="logout.php">Logout</a>
                 <a href="delete.php" class="danger-link">Delete Account</a>
             </nav>

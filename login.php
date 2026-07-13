@@ -18,15 +18,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $login = trim($_POST['login']);
 
-    // Find user by either username or email
+    // Find user by username 
     $stmt = $pdo->prepare("
         SELECT *
         FROM users
-        WHERE email = ?
-        OR username = ?
+        WHERE username = ?
     ");
 
-    $stmt->execute([$login, $login]);
+    $stmt->execute([$login]);
 
     $user = $stmt->fetch();
 
@@ -58,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             <h1>Login</h1>
 
-            <input name="login" placeholder="Email or Username" required>
+            <input name="login" placeholder="Username" required>
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Login</button>
 
