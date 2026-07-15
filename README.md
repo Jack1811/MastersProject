@@ -1,3 +1,3 @@
-Newest version of the demo pushed 17/07/2026
+Newest version of the demo pushed 15/07/2026
 
 Several push goals abandoned.
