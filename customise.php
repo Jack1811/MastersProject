@@ -120,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <button>Save Changes</button>
 
-        <a href="dashboard.php" class="btn-cancel">Cancel</a>
+        <a href="index.php" class="btn-cancel">Cancel</a>
 
     </form>
 

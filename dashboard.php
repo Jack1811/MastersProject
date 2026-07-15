@@ -1,9 +1,12 @@
 <?php
-// require authentication and database to run
+// require authentication and database to run, check user achievements
 require 'includes/auth.php';
 require 'includes/db.php';
+require 'includes/check_achievements.php';
+
 
 $userId = $_SESSION['user_id'];
+checkAchievements($pdo, $userId);
 
 // Fetch user profile information
 $stmtUser = $pdo->prepare("SELECT * FROM users WHERE user_id = ?");
@@ -59,6 +62,23 @@ $stmtLeaderboard = $pdo->query("
     ORDER BY xp DESC
     LIMIT 10
 ");
+
+// fetch achievements 
+$stmtAchievements = $pdo->prepare("
+SELECT a.*, ua.unlocked_at
+FROM achievements a
+JOIN user_achievements ua
+ON a.achievement_id = ua.achievement_id
+WHERE ua.user_id = ?
+ORDER BY ua.unlocked_at DESC
+LIMIT 3
+");
+
+$stmtAchievements->execute([$userId]);
+
+$achievements = $stmtAchievements->fetchAll();
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -77,6 +97,7 @@ $stmtLeaderboard = $pdo->query("
             <nav class="nav-links">
                 <a href="logout.php">Logout</a>
                 <a href="delete.php" class="danger-link">Delete Account</a>
+                <a href="policy.php">Policy</a>
             </nav>
             
             <div class="profile-area">
@@ -143,6 +164,17 @@ $stmtLeaderboard = $pdo->query("
                 <p>Completed: <?php echo $stats['completed'] ?? 0; ?></p>
                 <p>Pending: <?php echo $stats['pending'] ?? 0; ?></p>
             </div>
+            
+            <a href="achievements.php"><h3>Achievements</h3></a>
+            <?php foreach($achievements as $achievement): ?>
+            <div class="achievement-dash">
+                <img src="uploads/system/<?php echo htmlspecialchars($achievement['icon']); ?>" alt="<?php echo htmlspecialchars($achievement['title']); ?>" class="achievement-icon">
+                <h4><?php echo htmlspecialchars($achievement['title']); ?></h4>
+                <p><?php echo htmlspecialchars($achievement['description']); ?></p>
+
+            </div>
+
+            <?php endforeach; ?>
 
             <section class="leaderboard-section">
                 <h3>Global Leaderboard</h3>

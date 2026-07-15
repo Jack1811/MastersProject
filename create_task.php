@@ -125,6 +125,8 @@ $skills = $pdo->query("SELECT * FROM skills");
 
         <button type="submit">Create Quest</button>
 
+        <a href="index.php" class="btn-cancel">Cancel</a>
+
 </form>
 
 </section>

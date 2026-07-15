@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 13, 2026 at 10:40 AM
+-- Generation Time: Jul 15, 2026 at 11:22 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,148 +32,37 @@ CREATE TABLE `achievements` (
   `title` varchar(100) NOT NULL,
   `description` text DEFAULT NULL,
   `icon` varchar(255) DEFAULT NULL,
-  `xp_reward` int(11) DEFAULT 100
+  `xp_reward` int(11) DEFAULT 100,
+  `requirement_type` varchar(50) NOT NULL,
+  `requirement_value` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `achievements`
 --
 
-INSERT INTO `achievements` (`achievement_id`, `title`, `description`, `icon`, `xp_reward`) VALUES
-(1, 'First Quest', 'Complete your first quest', 'first_quest.png', 50),
-(2, 'Level 5', 'Reach level 5', 'level5.png', 100),
-(3, 'Fitness Beginner', 'Reach Fitness level 3', 'fitness_beginner.png', 100);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `forum_posts`
---
-
-CREATE TABLE `forum_posts` (
-  `post_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `content` text NOT NULL,
-  `created_at` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `forum_replies`
---
-
-CREATE TABLE `forum_replies` (
-  `reply_id` int(11) NOT NULL,
-  `post_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `content` text NOT NULL,
-  `created_at` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `group_quests`
---
-
-CREATE TABLE `group_quests` (
-  `group_quest_id` int(11) NOT NULL,
-  `party_id` int(11) NOT NULL,
-  `title` varchar(100) NOT NULL,
-  `description` text DEFAULT NULL,
-  `difficulty` enum('Easy','Medium','Hard','Epic') DEFAULT 'Easy',
-  `xp_reward` int(11) DEFAULT 500,
-  `status` enum('Active','Completed') DEFAULT 'Active',
-  `created_at` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `group_quest_assignments`
---
-
-CREATE TABLE `group_quest_assignments` (
-  `group_quest_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `completed` tinyint(1) DEFAULT 0,
-  `completed_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `group_quest_contributions`
---
-
-CREATE TABLE `group_quest_contributions` (
-  `contribution_id` int(11) NOT NULL,
-  `group_quest_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `progress_amount` int(11) DEFAULT 1,
-  `created_at` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `parties`
---
-
-CREATE TABLE `parties` (
-  `party_id` int(11) NOT NULL,
-  `party_name` varchar(100) NOT NULL,
-  `owner_id` int(11) DEFAULT NULL,
-  `xp` int(11) NOT NULL DEFAULT 0,
-  `level` int(11) NOT NULL DEFAULT 1,
-  `description` varchar(255) DEFAULT NULL,
-  `max_members` int(11) NOT NULL DEFAULT 5,
-  `created_at` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `parties`
---
-
-INSERT INTO `parties` (`party_id`, `party_name`, `owner_id`, `xp`, `level`, `description`, `max_members`, `created_at`) VALUES
-(1, 'Test', 2, 0, 1, NULL, 5, '2026-06-29 12:28:54');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `party_invites`
---
-
-CREATE TABLE `party_invites` (
-  `invite_id` int(11) NOT NULL,
-  `party_id` int(11) NOT NULL,
-  `sender_id` int(11) NOT NULL,
-  `receiver_id` int(11) NOT NULL,
-  `status` enum('Pending','Accepted','Declined') DEFAULT 'Pending',
-  `created_at` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `party_members`
---
-
-CREATE TABLE `party_members` (
-  `party_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `party_role` enum('Leader','Officer','Member') NOT NULL DEFAULT 'Member',
-  `joined_at` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `party_members`
---
-
-INSERT INTO `party_members` (`party_id`, `user_id`, `party_role`, `joined_at`) VALUES
-(1, 2, 'Member', '2026-06-29 12:32:22');
+INSERT INTO `achievements` (`achievement_id`, `title`, `description`, `icon`, `xp_reward`, `requirement_type`, `requirement_value`) VALUES
+(1, 'First Quest', 'Complete your first quest', 'bronze.png', 50, 'quests_completed', 1),
+(2, 'Level 5', 'Reach level 5', 'bronze.png', 100, 'level', 5),
+(3, 'Fitness Beginner', 'Reach Fitness level 3', 'bronze.png', 100, 'skill_level', 3),
+(4, 'Level 10', 'Reach Level 10', 'silver.png', 200, 'level', 10),
+(5, '10 Quests', 'Complete 10 quests', 'silver.png', 200, 'quests_completed', 10),
+(6, 'Discipline Beginner', 'Reach Discipline level 3', 'bronze.png', 100, 'skill_level', 3),
+(7, 'Creativity Beginner', 'Reach Creativity level 3', 'bronze.png', 100, 'skill_level', 3),
+(8, 'Knowledge Beginner', 'Reach Knowledge level 3 ', 'bronze.png', 100, 'skill_level', 3),
+(9, 'Social Beginner', 'Reach Social level 3', 'bronze.png', 100, 'skill_level', 3),
+(10, '15 Quests', 'Complete 15 quests', 'gold.png', 300, 'quests_completed', 15),
+(11, 'Level 15', 'Reach level 15', 'gold.png', 300, 'level', 15),
+(12, 'Fitness Fanatic', 'Reach Fitness level 5', 'silver.png', 200, 'skill_level', 5),
+(13, 'Discipline Devotee', 'Reach Discipline level 5', 'silver.png', 200, 'skill_level', 5),
+(14, 'Creativity Champion', 'Reach Creativity level 5', 'silver.png', 200, 'skill_level', 5),
+(15, 'Knowledge Kick-Start', 'Reach Knowledge level 5', 'silver.png', 200, 'skill_level', 5),
+(16, 'Fitness Freak', 'Reach Fitness level 10', 'gold.png', 300, 'skill_level', 10),
+(17, 'Discipline Disciple', 'Reach Discipline level 10', 'gold.png', 300, 'skill_level', 10),
+(18, 'Creativity Cultist', 'Reach Creativity level 10', 'gold.png', 300, 'skill_level', 10),
+(19, 'The Library', 'Reach Knowledge level 10', 'gold.png', 300, 'skill_level', 10),
+(20, 'Social Supporter', 'Reach Social level 5', 'silver.png', 200, 'skill_level', 5),
+(21, 'Social Superfan', 'Reach Social level 10', 'gold.png', 300, 'skill_level', 10);
 
 -- --------------------------------------------------------
 
@@ -195,18 +84,6 @@ CREATE TABLE `quests` (
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `quests`
---
-
-INSERT INTO `quests` (`quest_id`, `user_id`, `skill_id`, `title`, `description`, `difficulty`, `xp_reward`, `recurring`, `due_date`, `status`, `created_at`) VALUES
-(5, 2, 2, 'asda', NULL, 'Easy', 100, 0, NULL, 'Completed', '2026-07-08 12:37:02'),
-(6, 2, 5, 'dawsdawd', NULL, 'Easy', 200, 0, NULL, 'Completed', '2026-07-08 12:37:10'),
-(7, 2, 1, 'wasd', NULL, 'Easy', 25, 0, NULL, 'Completed', '2026-07-08 12:37:19'),
-(10, 4, 4, 'test2', NULL, 'Easy', 25, 0, NULL, 'Completed', '2026-07-13 09:29:39'),
-(11, 4, 1, 'Testing', NULL, 'Easy', 200, 0, NULL, 'Completed', '2026-07-13 09:29:46'),
-(12, 4, 1, 'Test1231', NULL, 'Easy', 200, 0, NULL, 'Completed', '2026-07-13 09:29:55');
-
 -- --------------------------------------------------------
 
 --
@@ -221,18 +98,6 @@ CREATE TABLE `quest_completions` (
   `xp_awarded` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `quest_completions`
---
-
-INSERT INTO `quest_completions` (`completion_id`, `quest_id`, `user_id`, `completed_at`, `xp_awarded`) VALUES
-(5, 5, 2, '2026-07-08 12:37:03', 100),
-(6, 6, 2, '2026-07-08 12:37:11', 200),
-(7, 7, 2, '2026-07-08 12:37:20', 25),
-(10, 10, 4, '2026-07-13 09:29:41', 25),
-(11, 11, 4, '2026-07-13 09:29:47', 200),
-(12, 12, 4, '2026-07-13 09:29:56', 200);
-
 -- --------------------------------------------------------
 
 --
@@ -240,18 +105,17 @@ INSERT INTO `quest_completions` (`completion_id`, `quest_id`, `user_id`, `comple
 --
 
 CREATE TABLE `roles` (
-  `role_id` int(11) NOT NULL,
-  `role_name` varchar(50) NOT NULL
+  `role_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `roles`
 --
 
-INSERT INTO `roles` (`role_id`, `role_name`) VALUES
-(3, 'Admin'),
-(2, 'Moderator'),
-(1, 'User');
+INSERT INTO `roles` (`role_id`) VALUES
+(1),
+(2),
+(3);
 
 -- --------------------------------------------------------
 
@@ -279,28 +143,12 @@ INSERT INTO `skills` (`skill_id`, `skill_name`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `support_tickets`
---
-
-CREATE TABLE `support_tickets` (
-  `ticket_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `subject` varchar(255) NOT NULL,
-  `message` text NOT NULL,
-  `status` enum('Open','In Progress','Closed') DEFAULT 'Open',
-  `created_at` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `email` varchar(255) NOT NULL,
   `password_hash` varchar(255) NOT NULL,
   `level` int(11) DEFAULT 1,
   `xp` int(11) DEFAULT 0,
@@ -309,14 +157,6 @@ CREATE TABLE `users` (
   `role_id` int(11) DEFAULT 1,
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`user_id`, `username`, `email`, `password_hash`, `level`, `xp`, `profile_picture`, `bio`, `role_id`, `created_at`) VALUES
-(2, 'jack1', 'jack1', '$2y$10$EKORDKgXgoN2f5UKVo4ds.NlSYDNlIzWXK7W4ajj.X6ojeU71ATK.', 2, 325, 'default.png', NULL, 1, '2026-06-29 12:28:26'),
-(4, 'test1', 'test@test.com', '$2y$10$BA0Roxbq0mFsBNx6Yr/pHuGFf1s1357LOZfn63YhSNGpBVBdPSvfy', 2, 425, 'default.png', NULL, 1, '2026-07-13 09:29:28');
 
 -- --------------------------------------------------------
 
@@ -344,22 +184,6 @@ CREATE TABLE `user_skills` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `user_skills`
---
-
-INSERT INTO `user_skills` (`user_id`, `skill_id`, `xp`, `level`) VALUES
-(2, 1, 25, 1),
-(2, 2, 100, 2),
-(2, 3, 0, 1),
-(2, 4, 0, 1),
-(2, 5, 200, 3),
-(4, 1, 400, 4),
-(4, 2, 0, 1),
-(4, 3, 0, 1),
-(4, 4, 25, 1),
-(4, 5, 0, 1);
-
---
 -- Indexes for dumped tables
 --
 
@@ -368,66 +192,6 @@ INSERT INTO `user_skills` (`user_id`, `skill_id`, `xp`, `level`) VALUES
 --
 ALTER TABLE `achievements`
   ADD PRIMARY KEY (`achievement_id`);
-
---
--- Indexes for table `forum_posts`
---
-ALTER TABLE `forum_posts`
-  ADD PRIMARY KEY (`post_id`),
-  ADD KEY `idx_posts_user` (`user_id`);
-
---
--- Indexes for table `forum_replies`
---
-ALTER TABLE `forum_replies`
-  ADD PRIMARY KEY (`reply_id`),
-  ADD KEY `post_id` (`post_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `group_quests`
---
-ALTER TABLE `group_quests`
-  ADD PRIMARY KEY (`group_quest_id`),
-  ADD KEY `party_id` (`party_id`);
-
---
--- Indexes for table `group_quest_assignments`
---
-ALTER TABLE `group_quest_assignments`
-  ADD PRIMARY KEY (`group_quest_id`,`user_id`),
-  ADD KEY `idx_user` (`user_id`);
-
---
--- Indexes for table `group_quest_contributions`
---
-ALTER TABLE `group_quest_contributions`
-  ADD PRIMARY KEY (`contribution_id`),
-  ADD KEY `group_quest_id` (`group_quest_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `parties`
---
-ALTER TABLE `parties`
-  ADD PRIMARY KEY (`party_id`),
-  ADD KEY `idx_owner` (`owner_id`);
-
---
--- Indexes for table `party_invites`
---
-ALTER TABLE `party_invites`
-  ADD PRIMARY KEY (`invite_id`),
-  ADD KEY `party_id` (`party_id`),
-  ADD KEY `sender_id` (`sender_id`),
-  ADD KEY `receiver_id` (`receiver_id`);
-
---
--- Indexes for table `party_members`
---
-ALTER TABLE `party_members`
-  ADD PRIMARY KEY (`party_id`,`user_id`),
-  ADD KEY `idx_member` (`user_id`);
 
 --
 -- Indexes for table `quests`
@@ -450,8 +214,7 @@ ALTER TABLE `quest_completions`
 -- Indexes for table `roles`
 --
 ALTER TABLE `roles`
-  ADD PRIMARY KEY (`role_id`),
-  ADD UNIQUE KEY `role_name` (`role_name`);
+  ADD PRIMARY KEY (`role_id`);
 
 --
 -- Indexes for table `skills`
@@ -461,19 +224,11 @@ ALTER TABLE `skills`
   ADD UNIQUE KEY `skill_name` (`skill_name`);
 
 --
--- Indexes for table `support_tickets`
---
-ALTER TABLE `support_tickets`
-  ADD PRIMARY KEY (`ticket_id`),
-  ADD KEY `idx_tickets_user` (`user_id`);
-
---
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `username` (`username`),
-  ADD UNIQUE KEY `email` (`email`),
   ADD KEY `role_id` (`role_id`);
 
 --
@@ -498,55 +253,19 @@ ALTER TABLE `user_skills`
 -- AUTO_INCREMENT for table `achievements`
 --
 ALTER TABLE `achievements`
-  MODIFY `achievement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `forum_posts`
---
-ALTER TABLE `forum_posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `forum_replies`
---
-ALTER TABLE `forum_replies`
-  MODIFY `reply_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `group_quests`
---
-ALTER TABLE `group_quests`
-  MODIFY `group_quest_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `group_quest_contributions`
---
-ALTER TABLE `group_quest_contributions`
-  MODIFY `contribution_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `parties`
---
-ALTER TABLE `parties`
-  MODIFY `party_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `party_invites`
---
-ALTER TABLE `party_invites`
-  MODIFY `invite_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `achievement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `quests`
 --
 ALTER TABLE `quests`
-  MODIFY `quest_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `quest_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT for table `quest_completions`
 --
 ALTER TABLE `quest_completions`
-  MODIFY `completion_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `completion_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -561,74 +280,14 @@ ALTER TABLE `skills`
   MODIFY `skill_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `support_tickets`
---
-ALTER TABLE `support_tickets`
-  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `forum_posts`
---
-ALTER TABLE `forum_posts`
-  ADD CONSTRAINT `forum_posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `forum_replies`
---
-ALTER TABLE `forum_replies`
-  ADD CONSTRAINT `forum_replies_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `forum_posts` (`post_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `forum_replies_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `group_quests`
---
-ALTER TABLE `group_quests`
-  ADD CONSTRAINT `group_quests_ibfk_1` FOREIGN KEY (`party_id`) REFERENCES `parties` (`party_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `group_quest_assignments`
---
-ALTER TABLE `group_quest_assignments`
-  ADD CONSTRAINT `group_quest_assignments_ibfk_1` FOREIGN KEY (`group_quest_id`) REFERENCES `group_quests` (`group_quest_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `group_quest_assignments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `group_quest_contributions`
---
-ALTER TABLE `group_quest_contributions`
-  ADD CONSTRAINT `group_quest_contributions_ibfk_1` FOREIGN KEY (`group_quest_id`) REFERENCES `group_quests` (`group_quest_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `group_quest_contributions_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `parties`
---
-ALTER TABLE `parties`
-  ADD CONSTRAINT `parties_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL;
-
---
--- Constraints for table `party_invites`
---
-ALTER TABLE `party_invites`
-  ADD CONSTRAINT `party_invites_ibfk_1` FOREIGN KEY (`party_id`) REFERENCES `parties` (`party_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `party_invites_ibfk_2` FOREIGN KEY (`sender_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `party_invites_ibfk_3` FOREIGN KEY (`receiver_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `party_members`
---
-ALTER TABLE `party_members`
-  ADD CONSTRAINT `party_members_ibfk_1` FOREIGN KEY (`party_id`) REFERENCES `parties` (`party_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `party_members_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `quests`
@@ -643,12 +302,6 @@ ALTER TABLE `quests`
 ALTER TABLE `quest_completions`
   ADD CONSTRAINT `quest_completions_ibfk_1` FOREIGN KEY (`quest_id`) REFERENCES `quests` (`quest_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `quest_completions_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `support_tickets`
---
-ALTER TABLE `support_tickets`
-  ADD CONSTRAINT `support_tickets_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `users`

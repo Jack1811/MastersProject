@@ -1,7 +1,9 @@
 <?php
-// requires database and authenticator to run
+// requires database and authenticator to run, achievement checker
 require 'includes/auth.php';
 require 'includes/db.php';
+require 'includes/check_achievements.php';
+
 
 // get quest id from the URL
 $questId = $_GET['quest_id'] ?? 0;
@@ -52,12 +54,7 @@ INSERT INTO quest_completions
     xp_awarded
 )
 VALUES
-(
-    ?,
-    ?,
-    ?
-)
-"
+(?,?,?)"
 )->execute([
     $questId,
     $quest['user_id'],
@@ -167,6 +164,9 @@ WHERE user_id = ?
     $accountLevel,
     $quest['user_id']
 ]);
+
+// check if user has completed achievement
+checkAchievements($pdo, $userId);
 
 // return the user to the dashboard
 header("Location: dashboard.php");

@@ -1,27 +1,53 @@
 <?php
-// needs authenticator and database to ensure user exists and is logged in
 require 'includes/auth.php';
 require 'includes/db.php';
 
-// session using user id
 $userId = $_SESSION['user_id'];
 
-// runs if post
-if($_SERVER['REQUEST_METHOD'] === 'POST')
+if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
-    // query to delete user
-    $stmt = $pdo->prepare(
-        "DELETE FROM users
-         WHERE user_id=?"
-    );
+    // Get current profile picture
+    $stmt = $pdo->prepare("
+        SELECT profile_picture
+        FROM users
+        WHERE user_id = ?
+    ");
+    $stmt->execute([$userId]);
+    $user = $stmt->fetch();
 
-    // runs query
+    $profilePicture = $user['profile_picture'];
+
+    // Delete user
+    $stmt = $pdo->prepare("
+        DELETE FROM users
+        WHERE user_id = ?
+    ");
     $stmt->execute([$userId]);
 
-    // destroys session to ensure user is logged out
+    // Delete image if it isn't the default
+    if ($profilePicture !== 'default.png')
+    {
+        // Check whether anyone else is using it
+        $stmt = $pdo->prepare("
+            SELECT COUNT(*)
+            FROM users
+            WHERE profile_picture = ?
+        ");
+        $stmt->execute([$profilePicture]);
+
+        if ($stmt->fetchColumn() == 0)
+        {
+            $file = "uploads/profile_pictures/" . $profilePicture;
+
+            if (file_exists($file))
+            {
+                unlink($file);
+            }
+        }
+    }
+
     session_destroy();
 
-    // sends user to index
     header("Location: index.php");
     exit;
 }
