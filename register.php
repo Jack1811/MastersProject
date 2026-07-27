@@ -96,7 +96,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
                 <input name="username" placeholder="Username" required>
                 <input type="password" name="password" placeholder="Password" required>
-                <label><input type="checkbox" required>I agree to the <a href="policy.php">User Policy</a></label>
+                <label class="policy-check"><input type="checkbox" required><span>I agree to the <a href="policy.php">User Policy</a></span></label>
                 <button>Register</button>
 
                 <p>Already got an account?<a href="login.php" class="register-link">Login here</a></p>

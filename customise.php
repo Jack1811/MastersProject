@@ -1,5 +1,5 @@
 <?php
-require 'includes/auth.php';
+require 'includes/auth.php'; 
 require 'includes/db.php';
 
 $userId = $_SESSION['user_id'];

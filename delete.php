@@ -61,18 +61,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     <title>Delete Account</title>
 </head>
 <body>
-    <h1>Delete Account</h1>
 
-    <p> Warning: This action cannot be undone. All quests, skills, achievements and progress will be permanently removed.</p>
+    <section class="delete-container">
+        <div class="delete-section">
+            <h1>Delete Account</h1>
 
-    <form method="POST">
+            <p><b>Warning: This action cannot be undone. All quests, skills, achievements and progress will be permanently removed.</b></p>
 
-    <button type="submit" onclick="return confirm('Are you sure you want to delete your account?');">Delete My Account</button>
+            <div class="delete-page-buttons">
+                <form method="POST">
+                <button type="submit" class="confirm-delete-btn" onclick="return confirm('Are you sure you want to delete your account?');">Delete My Account</button>
+                </form>
 
-    </form>
+                <p class="cancel-delete"><a href="index.php">Cancel</a></p>
+            </div>
+        </div>
+    </section>
 
-<br>
-
-    <a href="index.php">Cancel</a>
 </body>
 </html>

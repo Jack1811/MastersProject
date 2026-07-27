@@ -13,7 +13,7 @@ $stmtUser = $pdo->prepare("SELECT * FROM users WHERE user_id = ?");
 $stmtUser->execute([$userId]);
 $user = $stmtUser->fetch();
 
-// Calculate overall experience metrics
+// Calculate overall experience metrics 
 $currentLevel = $user['level'];
 $currentXp = $user['xp'];
 
@@ -88,7 +88,7 @@ $achievements = $stmtAchievements->fetchAll();
     <link rel="stylesheet" href="css/styles.css">
     <title>Quest Tracker Dashboard</title>
 </head>
-<body>
+<body class="dashboard-body">
 
     <div class="dashboard-layout">
         
@@ -100,25 +100,26 @@ $achievements = $stmtAchievements->fetchAll();
                 <a href="policy.php">Policy</a>
             </nav>
             
-            <div class="profile-area">
-                <img src="uploads/profile_pictures/<?php echo htmlspecialchars($user['profile_picture']); ?>" alt="Profile Picture" class="profile-picture">
+            <div class = "profile-and-progrress-area">
+                <div class="profile-area">
 
-                <h1>
-                    <a href="customise.php" class="profile-link">
-                        <?php echo htmlspecialchars($user['username']); ?>
-                    </a>
-                </h1>
-                <br>
-                <p><?php echo htmlspecialchars($user['bio']);?></p>
-                <br>
-            </div>
+                    <h1>
+                        <a href="customise.php" class="profile-link">
+                            <?php echo htmlspecialchars($user['username']); ?>
+                        </a>
+                    </h1>
+                    <p class="character-bio"><?php echo htmlspecialchars($user['bio']);?></p>
+                    <br>
+                    <img src="uploads/profile_pictures/<?php echo htmlspecialchars($user['profile_picture']); ?>" alt="Profile Picture" class="profile-picture">
+                </div>
 
-            <div class="overall-progress">
-                <label>XP</label>
-                <div class="progress-container">
-                    <progress value="<?php echo $progress; ?>" max="<?php echo $needed; ?>"></progress>
-                    <span class="xp-text"><?php echo $currentXp; ?> / <?php echo $nextLevelXp; ?> XP (<?php echo round($percentage); ?>%)</span>
-                    <p class="lvl-text">Level <?php echo $currentLevel; ?></p>
+                <div class="overall-progress">
+                    <label>XP</label>
+                    <div class="progress-container">
+                        <progress value="<?php echo $progress; ?>" max="<?php echo $needed; ?>"></progress>
+                        <span class="xp-text"><?php echo $currentXp; ?> / <?php echo $nextLevelXp; ?> XP (<?php echo round($percentage); ?>%)</span>
+                        <p class="lvl-text">Level <?php echo $currentLevel; ?></p>
+                    </div>
                 </div>
             </div>
 
@@ -165,16 +166,18 @@ $achievements = $stmtAchievements->fetchAll();
                 <p>Pending: <?php echo $stats['pending'] ?? 0; ?></p>
             </div>
             
-            <a href="achievements.php"><h3>Achievements</h3></a>
-            <?php foreach($achievements as $achievement): ?>
-            <div class="achievement-dash">
-                <img src="uploads/system/<?php echo htmlspecialchars($achievement['icon']); ?>" alt="<?php echo htmlspecialchars($achievement['title']); ?>" class="achievement-icon">
-                <h4><?php echo htmlspecialchars($achievement['title']); ?></h4>
-                <p><?php echo htmlspecialchars($achievement['description']); ?></p>
+            <div class="achievement-section">
+                <a href="achievements.php"><h3>Achievements</h3></a>
+                <?php foreach($achievements as $achievement): ?>
+                <div class="achievement-dash">
+                    <img src="uploads/system/<?php echo htmlspecialchars($achievement['icon']); ?>" alt="<?php echo htmlspecialchars($achievement['title']); ?>" class="achievement-icon">
+                    <h4><?php echo htmlspecialchars($achievement['title']); ?></h4>
+                    <p><?php echo htmlspecialchars($achievement['description']); ?></p>
 
+                </div>
+
+                <?php endforeach; ?>
             </div>
-
-            <?php endforeach; ?>
 
             <section class="leaderboard-section">
                 <h3>Global Leaderboard</h3>
@@ -206,10 +209,9 @@ $achievements = $stmtAchievements->fetchAll();
         </aside>
 
         <main class="main-content">
-            
-        
+
             <header class="main-header">
-                <a href="create_task.php" class="btn-add-task">Add New Task</a>
+                <h1><a href="create_task.php" class="btn-add-task">Add New Task</a></h1>
             </header>
 
             <section class="quests-grid">
@@ -222,24 +224,26 @@ $achievements = $stmtAchievements->fetchAll();
                     $taskCounter = 1;
                     foreach ($activeQuests as $quest): 
                     ?>
-                        <div class="task-card">
+                        <div class="task-card-outer">
                             <div class="task-card-header">
-                                Task <?php echo $taskCounter++; ?>
+                                    Task <?php echo $taskCounter++; ?>
                             </div>
-                            <div class="task-card-body">
-                                <p><strong>Title:</strong> <?php echo htmlspecialchars($quest['title']); ?></p>
-                                <p><strong>XP Reward:</strong> <?php echo htmlspecialchars($quest['xp_reward']); ?> XP</p>
-                                <p><strong>Description:</strong> <?php echo htmlspecialchars($quest['description']); ?></p>
-                                
-                                <a href="complete_task.php?quest_id=<?php echo urlencode($quest['quest_id']); ?>" class="btn-complete">Mark as completed</a>
+                            
+                            <div class="task-card">
+                                <div class="task-card-body">
+                                    <p><strong>Title:</strong> <?php echo htmlspecialchars($quest['title']); ?></p>
+                                    <p><strong>XP Reward:</strong> <?php echo htmlspecialchars($quest['xp_reward']); ?> XP</p>
+                                    <p><strong>Description:</strong> <?php echo htmlspecialchars($quest['description']); ?></p>
+                                    
+                                    <a href="complete_task.php?quest_id=<?php echo urlencode($quest['quest_id']); ?>" class="btn-complete">Mark as completed</a>
 
-                                <a href="delete_task.php?quest_id=<?php echo urlencode($quest['quest_id']); ?>" class="btn-delete" onclick="return confirm('Are you sure you want to delete this quest?');">Delete Quest</a>
+                                    <a href="delete_task.php?quest_id=<?php echo urlencode($quest['quest_id']); ?>" class="btn-delete" onclick="return confirm('Are you sure you want to delete this quest?');">Delete Quest</a>
+                                </div>
                             </div>
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
             </section>
-
 
         </main>
 

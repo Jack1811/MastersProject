@@ -41,10 +41,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 ?>
 
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
     <title>Login</title>
@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <button type="submit">Login</button>
 
             <p>Not got an account?<a href="register.php" class="register-link">Register here</a></p>
-            <a href="policy.php">User Policy</a>
+            <p class="user-policy-link"><a href="policy.php">User Policy</a></p>
 
         </form>
 

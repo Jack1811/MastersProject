@@ -35,25 +35,32 @@ $achievements = $stmtAchievements->fetchAll();
 </head>
 <body>
 
-<h1>Achievements</h1>
-<a href="index.php" class="btn-cancel">Go Back</a>
-<div class="achievements-grid">
-    <?php foreach($achievements as $achievement): ?>
-    <div class="achievement-card">
-        <?php if($achievement['unlocked_at']): ?>
-            <img src="uploads/system/<?php echo htmlspecialchars($achievement['icon']); ?>" alt="<?php echo htmlspecialchars($achievement['title']); ?>" class="achievement-icon">
-            <h2><?php echo htmlspecialchars($achievement['title']); ?></h2>
-                <p><?php echo htmlspecialchars($achievement['description']); ?></p>
-                <p><strong>XP Reward:</strong><?php echo htmlspecialchars($achievement['xp_reward']); ?> XP</p>
-                <small>Unlocked:<?php echo htmlspecialchars($achievement['unlocked_at']); ?></small>
-            <?php else: ?>
-                <img src="uploads/system/lock.png" alt="Locked Achievement" class="achievement-icon">
-                <h2>Hidden Achievement</h2>
-                    <p><?php echo htmlspecialchars($achievement['description']); ?></p>
-                    <small>Not unlocked yet</small>
-        <?php endif; ?>
-    </div>
-    <?php endforeach; ?>
-</div>
+    <section class="achievement-container">
+        
+        <div class="achievement-header">
+            <a href="index.php" class="achievement-cancel">Go Back</a>    
+            <h1>Achievements</h1>
+        </div>
+
+        <div class="achievements-grid">
+            <?php foreach($achievements as $achievement): ?>
+            <div class="achievement-card">
+                <?php if($achievement['unlocked_at']): ?>
+                    <img src="uploads/system/<?php echo htmlspecialchars($achievement['icon']); ?>" alt="<?php echo htmlspecialchars($achievement['title']); ?>" class="achievement-icon">
+                    <h2><?php echo htmlspecialchars($achievement['title']); ?></h2>
+                        <p><?php echo htmlspecialchars($achievement['description']); ?></p>
+                        <p><strong>XP Reward:</strong><?php echo htmlspecialchars($achievement['xp_reward']); ?> XP</p>
+                        <small>Unlocked:<?php echo htmlspecialchars($achievement['unlocked_at']); ?></small>
+                    <?php else: ?>
+                        <img src="uploads/system/lock.png" alt="Locked Achievement" class="achievement-icon">
+                        <h2>Hidden Achievement</h2>
+                            <p><?php echo htmlspecialchars($achievement['description']); ?></p>
+                            <small>Not unlocked yet</small>
+                <?php endif; ?>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </section>
+
 </body>
 </html>

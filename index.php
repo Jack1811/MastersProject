@@ -5,7 +5,7 @@ session_start();
 // checks if user is logged in, if so, send to dashboard instead
 if(isset($_SESSION['user_id']))
 {
-    header("Location: dashboard.php");
+    header("Location: dashboard.php"); 
     exit();
 }
 ?>
@@ -24,7 +24,7 @@ if(isset($_SESSION['user_id']))
         <h1>QUESTS</h1>
         <a href="login.php" class="btn">Login</a>
         <a href="register.php" class="btn">Register</a>
-        <a href="policy.php">User Policy</a>
+        <a href="policy.php" class="policy-link">User Policy</a>
     </div>
 
 </section>

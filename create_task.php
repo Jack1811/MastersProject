@@ -89,7 +89,7 @@ $skills = $pdo->query("SELECT * FROM skills");
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
@@ -102,24 +102,26 @@ $skills = $pdo->query("SELECT * FROM skills");
 
         <input name="title" placeholder="Quest Title" required>
 
-        <select name="skill_id" required>
+        <div class="select-group">
+            <select name="skill_id" required>
 
-            <?php foreach ($skills as $skill): // loop through skills so user can select one?>
-                <option value="<?php echo htmlspecialchars($skill['skill_id']); ?>">
-                    <?php echo htmlspecialchars($skill['skill_name']); ?>
-                </option>
-            <?php endforeach; ?>
+                <?php foreach ($skills as $skill): // loop through skills so user can select one?>
+                    <option value="<?php echo htmlspecialchars($skill['skill_id']); ?>">
+                        <?php echo htmlspecialchars($skill['skill_name']); ?>
+                    </option>
+                <?php endforeach; ?>
 
-        </select>
+            </select>
 
-        <select name="difficulty" required>
+            <select name="difficulty" required>
 
-            <option value="Easy">Easy</option>
-            <option value="Medium">Medium</option>
-            <option value="Hard">Hard</option>
-            <option value="Legendary">Legendary</option>
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+                <option value="Legendary">Legendary</option>
 
-        </select>
+            </select>
+        </div>
 
         <input type="text" name="description" placeholder="Description">
 
