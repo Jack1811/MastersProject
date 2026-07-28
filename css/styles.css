@@ -990,9 +990,10 @@ progress::-moz-progress-bar {
     }
 
     .main-content {
-        margin-top: 0;
+        margin: 0;
         order: 1;
-        gap:12px;
+        gap: 12px;
+        width: 100%;
     }
     .nav-links {
         flex-wrap: wrap;
@@ -1008,6 +1009,7 @@ progress::-moz-progress-bar {
 
     .quests-grid {
         grid-template-columns: 1fr;
+        width: 100%;
     }
 
     .achievements-grid {
