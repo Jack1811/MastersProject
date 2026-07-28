@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Metamorphous&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
 
@@ -31,12 +30,10 @@
 .hero::before {
     content: "";
     position: absolute;
-
     top: 10px;
     left: 10px;
     right: 10px;
     bottom: 10px;
-
     border: 3px solid black;
     border-radius: 10px;
     pointer-events: none;
@@ -78,7 +75,7 @@
 /* ***************************************************** LOGIN AND REGISTER ***************************************************** */
 
 .login-page {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -97,12 +94,10 @@
 .login-box::before {
     content: "";
     position: absolute;
-
     top: 10px;
     left: 10px;
     right: 10px;
     bottom: 10px;
-
     border: 3px solid black;
     border-radius: 10px;
     pointer-events: none;
@@ -177,12 +172,10 @@
 .error::before {
     content: "";
     position: absolute;
-
     top: 3px;
     left: 3px;
     right: 3px;
     bottom: 3px;
-
     border: 3px solid black;
     border-radius: 10px;
     pointer-events: none;
@@ -294,12 +287,10 @@
 .sidebar::before {
     content: "";
     position: absolute;
-
     top: 3px;
     left: 3px;
     right: 3px;
     bottom: 3px;
-
     border: 3px solid black;
     border-radius: 10px;
     pointer-events: none;
@@ -370,7 +361,6 @@
 .profile-picture {
     width: calc(100% + 20px);
     aspect-ratio: 1/1;
-    
     height: auto;
     object-fit: cover;
     display: block;
@@ -520,12 +510,10 @@ progress::-moz-progress-bar {
 .no-quests p::before {
     content: "";
     position: absolute;
-
     top: 2px;
     left: 2px;
     right: 2px;
     bottom: 2px;
-
     border: 2px solid black;
     border-radius: 10px;
     pointer-events: none;
@@ -550,12 +538,10 @@ progress::-moz-progress-bar {
 .task-card-outer::before {
     content: "";
     position: absolute;
-
     top: 3px;
     left: 3px;
     right: 3px;
     bottom: 3px;
-
     border:2px solid black;
     border-radius: 10px;
     pointer-events: none;
@@ -653,12 +639,10 @@ progress::-moz-progress-bar {
 .customise-box::before {
     content: "";
     position: absolute;
-
     top: 5px;
     left: 5px;
     right: 5px;
     bottom: 5px;
-
     border: 3px solid black;
     border-radius: 10px;
     pointer-events: none;
@@ -801,12 +785,10 @@ progress::-moz-progress-bar {
 .achievements-grid::before {
     content: "";
     position: absolute;
-
     top: 5px;
     left: 5px;
     right: 5px;
     bottom: 5px;
-
     border: 3px solid black;
     border-radius: 10px;
     pointer-events: none;
@@ -863,12 +845,10 @@ progress::-moz-progress-bar {
 .delete-section::before {
     content: "";
     position: absolute;
-
     top: 2px;
     left: 2px;
     right: 2px;
     bottom: 2px;
-
     border: 3px solid black;
     border-radius: 10px;
     pointer-events: none;
@@ -949,12 +929,10 @@ progress::-moz-progress-bar {
 .policy-text::before {
     content: "";
     position: absolute;
-
     top: 2px;
     left: 2px;
     right: 2px;
     bottom: 2px;
-
     border: 3px solid black;
     border-radius: 10px;
     pointer-events: none;
@@ -970,6 +948,134 @@ progress::-moz-progress-bar {
 }
 
 /* ***************************************************** Mobile Styling ***************************************************** */
-@media only screen and (max-width: 900px) {  
+@media only screen and (max-width: 900px) {
 
+    .page-container,
+    .dashboard-body,
+    .achievement-container,
+    .delete-container,
+    .policy-container {
+        border: 8px solid black;
+    }
+
+    .hero,
+    .login-box,
+    .customise-box {
+        width: 95%;
+        padding: 25px;
+    }
+
+    .hero h1,
+    .login-box h1 {
+        font-size: 32px;
+    }
+
+    .btn {
+        font-size: 24px;
+    }
+
+    .dashboard-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 10px;
+    }
+
+    .sidebar {
+        width: 100%;
+        margin: 0;
+        order: 2;
+        padding: 8px;
+        gap: 10px;
+    }
+
+    .main-content {
+        margin-top: 0;
+        order: 1;
+        gap:12px;
+    }
+    .nav-links {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .nav-links a {
+        flex: 1 1 40%;
+        padding: 10px;
+        background: rgba(255,255,255,0.15);
+        border-radius: 8px;
+    }
+
+    .quests-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .achievements-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .main-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+
+    .main-header a {
+        text-align: center;
+    }
+
+    .achievement-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .achievement-cancel {
+        position: static;
+        font-size: 18px;
+    }
+
+    .delete-page-buttons {
+        flex-direction: column;
+    }
+
+    .confirm-delete-btn,
+    .cancel-delete a {
+        width: 100%;
+    }
+
+    .profile-picture {
+        width: 180px;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    p,
+    a,
+    label,
+    input,
+    button,
+    textarea,
+    select {
+        font-size: 18px;
+    }
+
+    .profile-area,
+    .skills-section,
+    .stats-section,
+    .achievement-section,
+    .leaderboard-section {
+        padding: 10px;
+    }   
+
+    .profile-area .profile-link {
+        font-size: 20px;
+    }
 }
