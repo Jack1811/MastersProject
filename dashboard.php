@@ -59,7 +59,7 @@ $activeQuests = $stmtQuests->fetchAll();
 $stmtLeaderboard = $pdo->query("
     SELECT username, level, xp
     FROM users
-    ORDER BY xp DESC
+    ORDER BY level DESC, xp DESC
     LIMIT 10
 ");
 
