@@ -8,6 +8,7 @@ $userId = $_SESSION['user_id'];
 $stmt = $pdo->prepare("SELECT * FROM users WHERE user_id = ?");
 $stmt->execute([$userId]);
 $user = $stmt->fetch();
+$error = "";
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -18,7 +19,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check if a new file was uploaded
     if (!empty($_FILES['profile_picture']['name'])) {
+        
+        // Check that image is not too big
+        $maxFileSize = 2 * 1024 * 1024;
 
+        if ($_FILES['profile_picture']['size'] > $maxFileSize) {
+            $error = "Profile picture is too large. Maximum size is 2MB.";
+        }
+        else {
         $allowed = ['jpg', 'jpeg', 'png', 'gif'];
 
         $extension = strtolower(
@@ -69,8 +77,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     }
+    }
 
-
+if (empty($error)) {
     // Update user profile
     $stmt = $pdo->prepare("
         UPDATE users
@@ -91,6 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: dashboard.php");
     exit();
 }
+}
 ?>
 
 <!DOCTYPE html>
@@ -110,10 +120,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <h1>Customise Character</h1>
         
+        <?php if (!empty($error)): ?>
+            <p class="error-message"><?= htmlspecialchars($error) ?></p>
+        <?php endif; ?>
+        
         <img src="uploads/profile_pictures/<?= htmlspecialchars($user['profile_picture']) ?>" class="profile-preview" id="profilePreview" alt="Profile Picture">
 
         <label class="upload-label">Profile Picture</label>
         <input type="file" name="profile_picture" id="profilePicture" accept="image/*">
+        <p>Maximum file size: 2MB</p>
 
         <label class="bio-label">Character Bio</label>
         <textarea name="bio" maxlength="300" placeholder="Tell everyone about your adventurer..."><?= htmlspecialchars($user['bio']) ?></textarea>
