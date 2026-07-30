@@ -22,3 +22,5 @@ try {
     die("Database Error: " . $e->getMessage());
 
 }
+
+?>
